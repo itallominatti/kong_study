@@ -1,0 +1,23 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  name: api-gateway
+  host: httpbin.konghq.com
+  port: 80
+  protocol: http
+  routes:
+    - name: hello_api_gateway
+      paths:
+        - /
+        - /kong
+      strip_path: true
+      
+plugins:
+    - name: key-auth
+      service: api-gateway
+
+consumers:
+  - username: app
+    keyauth_credentials:
+      - key: secrets
